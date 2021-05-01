@@ -114,6 +114,7 @@ export default function MainPage(props) {
     const [loggedIn, setLoggedIn] = useState(false)
     const [searchText, setSearchText] = useState("")
 
+    // Second argument as [] to stop the infinite loop
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -123,9 +124,9 @@ export default function MainPage(props) {
 
             }
         }
-        currUser = localStorage.getItem("currUser")
         fetchData()
-    })
+    }, [])
+
     
     const fetchSearchData = async () => {
         try {
