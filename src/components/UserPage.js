@@ -34,7 +34,7 @@ export default function UserPage(props) {
               }
         }
         fetchData()
-    })
+    }, [])
 
     return (
         <div className="container emp-profile">

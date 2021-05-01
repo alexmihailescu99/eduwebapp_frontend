@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     BrowserRouter as Router,
     Route
@@ -18,7 +18,7 @@ export const backEndUrl = "http://localhost:8080/api"
 // Not Logged in Alert
 export const AlertDismissible = () => {
     const [show, setShow] = useState(true);
-    if (show && localStorage.getItem("currUser") === "null") {
+    if (show && (localStorage.getItem("currUser") === "null" || localStorage.getItem("currUser") === undefined)) {
         return (
         <Alert variant="danger" onClose={() => setShow(false)} dismissible>
             <Alert.Heading>You are not logged in</Alert.Heading>

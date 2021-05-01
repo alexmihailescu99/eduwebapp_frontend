@@ -12,6 +12,9 @@ export default function RegisterPage(props) {
     const [password, setPassword] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [occupation, setOccupation] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
 
     const onSubmit = async () => {
         try {
@@ -19,7 +22,10 @@ export default function RegisterPage(props) {
                 username: username,
                 password: password,
                 firstName: firstName,
-                lastName: lastName
+                lastName: lastName,
+                email: email,
+                occupation: occupation,
+                phoneNumber: phoneNumber
             })
             window.location.href = "/login"
         } catch (err) {
@@ -51,6 +57,21 @@ export default function RegisterPage(props) {
                 <div className="form-group">
                     <label>Last Name</label>
                     <input value={lastName} onChange={e => {setLastName(e.target.value)}} id="lastName" type="text" className="form-control" placeholder="Enter first name" />
+                </div>
+
+                <div className="form-group">
+                    <label>Email</label>
+                    <input value={email} onChange={e => {setEmail(e.target.value)}} id="email" type="text" className="form-control" placeholder="Enter email" />
+                </div>
+
+                <div className="form-group">
+                    <label>Occupation</label>
+                    <input value={occupation} onChange={e => {setOccupation(e.target.value)}} id="occupation" type="text" className="form-control" placeholder="Enter occupation" />
+                </div>
+
+                <div className="form-group">
+                    <label>Phone Number</label>
+                    <input value={phoneNumber} onChange={e => {setPhoneNumber(e.target.value)}} id="phoneNumber" type="text" className="form-control" placeholder="Enter phone number" />
                 </div>
 
                 <button type="submit" className="btn btn-dark btn-lg btn-block" style={{background: "#0275d8"}}>Create account</button>
