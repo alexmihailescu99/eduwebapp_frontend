@@ -29,7 +29,7 @@ const FooterPage = () => {
         </div>
         <div className="footer-copyright text-center py-3">
         <MDBContainer fluid>
-            &copy; {new Date().getFullYear()} Copyright: <a href="" style={{color: "white"}}> Alex Mihailescu</a>
+            &copy; {new Date().getFullYear()} Copyright: <a href="" style={{color: "white"}}> Alex Mihailescu</a> @ <a href ="https://www.softbinator.com/labs" style={{color: "white"}}>Softbinator Labs</a>
           </MDBContainer>
         </div>
       </MDBFooter>
