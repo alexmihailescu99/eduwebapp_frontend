@@ -115,7 +115,7 @@ export default function MainPage(props) {
     const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             try {
                 let res = await axios.get(`${backEndUrl}/post`)
                 setPosts(res.data)
