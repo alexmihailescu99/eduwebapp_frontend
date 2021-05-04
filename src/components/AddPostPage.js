@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import {backEndUrl} from "../App"
-axios.defaults.withCredentials = true
 
 export default function AddPostPage(props) {
     const [title, setTitle] = useState("")
@@ -14,26 +13,25 @@ export default function AddPostPage(props) {
     })
 
     const onSubmit = async e => {
-
         if (title.localeCompare("") === 0 || content.localeCompare("") === 0) {
             alert("Title and(or) content can not be empty")
-            window.location.reload()
+            window.location.href = "/addPost"
         }
         try {        
-            let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
+            let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                },
-                params: {
-                    title: title,
-                    content: content
                 }
               } : {}
-            let res = await axios.post(`${backEndUrl}/post`, headerPayload)
-            alert("You posted successfully")
+            let data = {
+                title: title,
+                content: content
+            }
+            let res = await axios.post(`${backEndUrl}/post`, data, headerPayload)
             window.location.href = "/"
         } catch (err) {
-            alert(err.response.status)
+            alert("There was something wrong! Please try again")
+            window.location.href = "/"
         }
     }
 

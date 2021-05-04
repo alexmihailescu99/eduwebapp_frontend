@@ -12,7 +12,7 @@ const InnerSidebarHeader = () => {
             <div className="inner-sidebar-header justify-content-center">
               <Link to="/addPost">
                 <button className="btn btn-primary has-icon btn-block" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-plus mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-plus mr-2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
@@ -86,12 +86,12 @@ const InnerMainPost = props => {
     let month = date.toLocaleString('default', { month: 'long' });
 
     return (
-        <div className="card mb-2" onMouseOver={{background: "#0275d8"}}>
+        <div className="card mb-2">
         <div className="card-body p-2 p-sm-3">
             <div className="media forum-item">
                 <a href = {`/users/${post.authorUsername}`} data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="mr-3 rounded-circle" width="50" alt="User" /></a>
                 <div className="media-body">
-                    <h6><a href="#" data-toggle="collapse" data-target=".forum-content" className="text-body">{post.title}</a></h6>
+                    <h6><a href={`/posts/${post.id}`} data-toggle="collapse" data-target=".forum-content" className="text-body">{post.title}</a></h6>
                     <p className="text-secondary">
                         {`${day} ${month}, ${hours}:${minutes}`}
                     </p>

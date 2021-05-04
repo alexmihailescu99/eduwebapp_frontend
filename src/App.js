@@ -13,6 +13,7 @@ import LoginPage from "./components/LoginPage"
 import AddPostPage from "./components/AddPostPage"
 import UserPage from "./components/UserPage"
 import axios from 'axios';
+import OwnUserPage from './components/OwnUserPage';
 axios.defaults.withCredentials = true
 export const backEndUrl = "http://localhost:8080/api"
 // Not Logged in Alert
@@ -48,6 +49,7 @@ function App() {
             <Route exact path = "/register" render = {props => (<RegisterPage {...props} header = {headerPayload} />)} />
             <Route exact path = "/login" render = {props => (<LoginPage {...props} header = {headerPayload} />)} />
             <Route exact path = "/users/:username" render = {props => (<UserPage {...props} header = {headerPayload} />)} />
+            <Route exact path = "/myProfile" render = {props => (<OwnUserPage {...props} header = {headerPayload} />)} />
             <Route exact path = "/addPost" render = {props => (<AddPostPage {...props} header = {headerPayload} />)}/>
           </div>
           <FooterComponent/>

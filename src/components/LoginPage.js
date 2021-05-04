@@ -19,6 +19,7 @@ export default function LoginPage(props) {
         } catch (err) {
             if (err.response.status === 401)
                 alert("Wrong username or password")
+                window.location.reload()
         }
     }
 
