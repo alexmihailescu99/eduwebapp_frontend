@@ -42,6 +42,7 @@ export default function NavbarComponent(props) {
                 </Nav>
                     <NavDropdown title={localStorage.getItem("currUser")} id="basic-nav-dropdown">
                             <NavDropdown.Item href={"/myProfile"} >Your Profile</NavDropdown.Item>
+                            <NavDropdown.Item href={"/myMessages"} >Your Messages</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
                         </NavDropdown>

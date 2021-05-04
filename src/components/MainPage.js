@@ -34,11 +34,6 @@ const InnerSidebarBody = () => {
                             <div className="simplebar-offset" style={{right: 0, bottom: 0}}>
                                 <div className="simplebar-content-wrapper" style={{height: "80%", overflow: 'hidden scroll'}}>
                                     <div className="simplebar-content" style={{padding: 16}}>
-                                        <nav className="nav nav-pills nav-gap-y-1 flex-column">
-                                            <a href="#" className="nav-link nav-link-faded has-icon active">All Threads</a>
-                                            <a href="#" className="nav-link nav-link-faded has-icon">Your Custom Feed</a>
-  
-                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +81,7 @@ const InnerMainPost = props => {
     let month = date.toLocaleString('default', { month: 'long' });
 
     return (
-        <div className="card mb-2">
+        <div className="card mb-2 show-white-space">
         <div className="card-body p-2 p-sm-3">
             <div className="media forum-item">
                 <a href = {`/users/${post.authorUsername}`} data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="mr-3 rounded-circle" width="50" alt="User" /></a>
@@ -98,7 +93,7 @@ const InnerMainPost = props => {
                     <p className="text-muted">Posted by <a href = {`/users/${post.authorUsername}`}>{post.authorUsername}</a></p>
                 </div>
                 <div className="text-muted small text-center align-self-center">
-                    <span className="d-none d-sm-inline-block"><i className="far fa-eye"></i> 18 replies</span>
+                    <span className="d-none d-sm-inline-block"><i className="far fa-eye"></i> {post.noReplies} replies</span>
                 </div>
             </div>
         </div>

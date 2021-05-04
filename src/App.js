@@ -10,11 +10,12 @@ import FooterComponent from "./components/FooterComponent"
 import MainPage from "./components/MainPage"
 import RegisterPage from "./components/RegisterPage"
 import LoginPage from "./components/LoginPage"
+import PostPage from "./components/PostPage"
 import AddPostPage from "./components/AddPostPage"
+import AddReplyPage from "./components/AddReplyPage"
 import UserPage from "./components/UserPage"
-import axios from 'axios';
 import OwnUserPage from './components/OwnUserPage';
-axios.defaults.withCredentials = true
+import axios from 'axios';
 export const backEndUrl = "http://localhost:8080/api"
 // Not Logged in Alert
 export const AlertDismissible = () => {
@@ -50,7 +51,9 @@ function App() {
             <Route exact path = "/login" render = {props => (<LoginPage {...props} header = {headerPayload} />)} />
             <Route exact path = "/users/:username" render = {props => (<UserPage {...props} header = {headerPayload} />)} />
             <Route exact path = "/myProfile" render = {props => (<OwnUserPage {...props} header = {headerPayload} />)} />
+            <Route exact path = "/posts/:postId" render = {props => (<PostPage {...props} header = {headerPayload} />)}/>
             <Route exact path = "/addPost" render = {props => (<AddPostPage {...props} header = {headerPayload} />)}/>
+            <Route exact path = "/addReply/:postId" render = {props => (<AddReplyPage {...props} header = {headerPayload} />)}/>
           </div>
           <FooterComponent/>
         </Router>

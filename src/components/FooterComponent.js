@@ -9,8 +9,9 @@ const FooterPage = () => {
           <MDBRow>
             <MDBCol md="6">
               <h5 className="title">Project Details</h5>
-                <p>Back-end technologies: Java(Spring Boot, MVC & Security, Lombok), MySQL & Hibernate ORM</p>
-                <p>Front-end technologies: JavaScript(React.js)</p>
+                <p>Back-end Technologies: Java(Spring Boot, MVC & Security, Lombok), MySQL & Hibernate ORM</p>
+                <p>Front-end Technologies: JavaScript(React.js)</p>
+                <p>DevOps Technologies: Docker & Docker Compose</p>
             </MDBCol>
             <MDBCol md="6" className="float-right">
               <h5 className="title">My Links</h5>
