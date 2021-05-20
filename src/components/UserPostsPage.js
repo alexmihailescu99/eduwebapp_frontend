@@ -50,7 +50,7 @@ const InnerMainHeader = () => {
   return (
     <div className="inner-main-header">
         <div className="row">
-            <a href="/"><span className="col-md-6">Latest</span></a>
+        <a href="/"><span className="col-md-6">Latest</span></a>
             <a href="/myFeed"><span style={{whiteSpace : "nowrap"}} className="col-md-3">My Feed</span></a>
             <a href="/myPosts"><span style={{whiteSpace : "nowrap"}} className="col-md-3">My Posts</span></a>
         </div>
@@ -115,16 +115,22 @@ const InnerMainPost = props => {
 
 
 
-export default function MainPage(props) {
-// Declare a new state variable, which we'll call "count"
+export default function UserPostsPage(props) {
     const [posts, setPosts] = useState([])
     const [followedCategoryTitles, setFollowedCategoryTitles] = useState([])
-
     // Second argument as [] to stop the infinite loop
     useEffect(() => {
+        if ((!localStorage.getItem("accessToken").localeCompare("null")) || localStorage.getItem("accessToken") === undefined)
+            window.location.href = "/login"
+
         const fetchData = async () => {
             try {
-                let res = await axios.get(`${backEndUrl}/post`)
+                let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                  } : {}
+                let res = await axios.get(`${backEndUrl}/post/own`, headerPayload)
                 setPosts(res.data)
             } catch (err) {
 

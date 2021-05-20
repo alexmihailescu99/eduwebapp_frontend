@@ -6,6 +6,11 @@ export default function LoginPage(props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     
+    useEffect(() => {
+        if (localStorage.getItem("accessToken") !== undefined && localStorage.getItem("accessToken").localeCompare("null") !== 0)
+            window.location.href = "/myProfile"
+
+    }, [])
     const onSubmit = async e => {
         e.preventDefault();
         try {

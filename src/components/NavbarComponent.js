@@ -42,8 +42,8 @@ export default function NavbarComponent(props) {
                 <Nav.Link href="/">Home</Nav.Link>
                 </Nav>
                     <NavDropdown title={localStorage.getItem("currUser")} id="basic-nav-dropdown">
-                            <NavDropdown.Item href={"/myProfile"} >Your Profile</NavDropdown.Item>
-                            <NavDropdown.Item href={"/myMessages"} >Your Messages</NavDropdown.Item>
+                            <NavDropdown.Item href={"/myProfile"} >My Profile</NavDropdown.Item>
+                            <NavDropdown.Item href={"/myMessages"} >My Messages</NavDropdown.Item>
                             {(!localStorage.getItem("userRole").localeCompare("ADMIN")) ? <NavDropdown.Item href={"/register"} >Create Admin Account</NavDropdown.Item> : null}
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>

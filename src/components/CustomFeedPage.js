@@ -51,7 +51,8 @@ const InnerMainHeader = () => {
     <div className="inner-main-header">
         <div className="row">
             <a href="/"><span className="col-md-6">Latest</span></a>
-            <a href="/yourFeed"><span style={{whiteSpace : "nowrap"}} className="col-md-3">Your feed</span></a>
+            <a href="/myFeed"><span style={{whiteSpace : "nowrap"}} className="col-md-3">My Feed</span></a>
+            <a href="/myPosts"><span style={{whiteSpace : "nowrap"}} className="col-md-3">My Posts</span></a>
         </div>
     </div>
   )
@@ -119,6 +120,9 @@ export default function CustomFeedPage(props) {
     const [followedCategoryTitles, setFollowedCategoryTitles] = useState([])
     // Second argument as [] to stop the infinite loop
     useEffect(() => {
+        if ((!localStorage.getItem("accessToken").localeCompare("null")) || localStorage.getItem("accessToken") === undefined)
+            window.location.href = "/login"
+
         const fetchData = async () => {
             try {
                 let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {

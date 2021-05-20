@@ -28,7 +28,6 @@ export default function AddPostPage(props) {
     }, [])
 
     const onSubmit = async e => {
-        alert(selectedCategory)
         if (title.localeCompare("") === 0 || content.localeCompare("") === 0) {
             alert("Title and(or) content can not be empty")
             window.location.href = "/addPost"
