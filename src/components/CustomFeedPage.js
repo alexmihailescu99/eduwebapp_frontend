@@ -114,15 +114,19 @@ const InnerMainPost = props => {
 
 
 
-export default function MainPage(props) {
-// Declare a new state variable, which we'll call "count"
+export default function CustomFeedPage(props) {
     const [posts, setPosts] = useState([])
     const [followedCategoryTitles, setFollowedCategoryTitles] = useState([])
     // Second argument as [] to stop the infinite loop
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let res = await axios.get(`${backEndUrl}/post`)
+                let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                  } : {}
+                let res = await axios.get(`${backEndUrl}/post/follow`, headerPayload)
                 setPosts(res.data)
             } catch (err) {
 

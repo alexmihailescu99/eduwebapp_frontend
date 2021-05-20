@@ -112,9 +112,21 @@ const InnerSidebarHeader = props => {
     }
     let month = date.toLocaleString('default', { month: 'long' });
 
-    const deleteReply = async() => {
-        alert("Deleting")
+    const deleteReply = async replyId => {
+        try {
+            let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+              } : {}
+            let res = await axios.delete(`${backEndUrl}/post/replies/${replyId}`, headerPayload)
+            window.location.reload()
+        } catch (err) {
+            alert(err)
+            window.location.reload()
+        }
     }
+
     return (
         <div className="card mb-2 show-white-space">
         <div className="card-body p-2 p-sm-3">
@@ -128,8 +140,9 @@ const InnerSidebarHeader = props => {
                     <p className="text-muted">
                         Replied by <a href = {`/users/${post.author.username}`}>{post.author.username}</a>
                         {
-                        !localStorage.getItem("currUser").localeCompare(post.author.username) ?
-                            <a href="#" onClick={deleteReply}className="float-right">Delete</a>
+                        !localStorage.getItem("currUser").localeCompare(post.author.username) || !localStorage.getItem("userRole").localeCompare("ADMIN")
+                            || !localStorage.getItem("userRole").localeCompare("MODERATOR") ?
+                            <a href="#" onClick={() => deleteReply(props.replyId)}className="float-right">Delete</a>
                         : ""
                     }
                         </p>
@@ -146,6 +159,9 @@ export default function PostPage(props) {
     const [replies, setReplies] = useState([])
 
     useEffect(() => {
+        if (localStorage.getItem("accessToken") === undefined || !localStorage.getItem("accessToken").localeCompare("null")) {
+            window.location.href = "/login"
+        }
         const fetchData = async () => {
             try {
                 let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
@@ -159,8 +175,7 @@ export default function PostPage(props) {
                     let res = await axios.get(`${backEndUrl}/post/replies/${props.match.params.postId}`, headerPayload);
                     setReplies(res.data)
                 } catch (err) {
-                    if (err.response.status === 404)
-                        alert("There are no replies yet")
+                    
                 }
             } catch (err) {
                 alert("Can not get main post")
@@ -185,7 +200,7 @@ export default function PostPage(props) {
                 <InnerMainPost postProp={mainPost}/>
                 {
                     replies[0] ? 
-                    replies.map(reply => <InnerMainReply postProp={reply}/>)
+                    replies.map(reply => <InnerMainReply replyId = {reply.id} postProp={reply}/>)
                     : 
                     "There are no replies here yet"
                 }

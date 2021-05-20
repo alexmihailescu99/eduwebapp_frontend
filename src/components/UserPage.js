@@ -11,7 +11,10 @@ export default function UserPage(props) {
     const [email, setEmail] = useState("")
     const [occupation, setOccupation] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    
+    // Really inefficient, but can't get it to work otherwise
+    const [followedUsernames, setFollowedUsernames] = useState([])
+    const [followers, setFollowers] = useState(-1)
+
     useEffect(() => {
         if (localStorage.getItem("accessToken") === "null" || localStorage.getItem("accessToken") === undefined)
             window.location.href = "/login"
@@ -28,28 +31,54 @@ export default function UserPage(props) {
                 setUsername(res.data.username)
                 setFirstName(res.data.firstName)
                 setLastName(res.data.lastName)
-                setRole(res.data.role)
+                setRole(res.data.role.replace("ROLE_", ''))
                 setEmail(res.data.email)
                 setOccupation(res.data.occupation)
                 setPhoneNumber(res.data.phoneNumber)
                 if (res.data.username.localeCompare(localStorage.getItem("currUser")) === 0)
                     window.location.href = "/myProfile"
-                try {
-                    res = await axios.get(`${backEndUrl}/user/followed/${id}`, headerPayload)
-                    alert(res.data)
-                } catch (err) {
-
-                }
             } catch (err) {
                     if (err.response.status === 401)
                         window.location.href = "/login"
+                    if (err.response.status === 404) {
+                        alert("No such user exists")
+                        window.location.href = "/"
+                    }
               }
         }
         fetchData()
     }, [])
 
-    const addFollowed = () => {
+    useEffect(() => {
+        const checkIfFollowed = async () => {
+            try {
+                let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                } : {}
+                let res = await axios.get(`${backEndUrl}/user/followed`, headerPayload)
+                setFollowedUsernames(res.data.map(user => user.username))
+            } catch (err) {
+    
+            }
+        }
+        checkIfFollowed()
+    }, [])
 
+
+    const addFollowed = async () => {
+        try {
+            let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            } : {}
+            let res = await axios.post(`${backEndUrl}/user/follow/${id}`, null, headerPayload)
+            window.location.reload()
+        } catch (err) {
+            alert(err)
+        }
     }
 
     return (
@@ -65,10 +94,14 @@ export default function UserPage(props) {
                         </div>
                        <div className = "row">
                             <div className = "col-sm">
-                                <input type="submit" className="profile-edit-btn" name="btnAddMore" value="Follow" onClick = {addFollowed} style={{background: "#0275d8", color: "white"}}/>
+                                {!followedUsernames.includes(username) ?
+                                    <input type="button" className="profile-edit-btn" name="btnAddMore" value="Follow" onClick = {addFollowed} style={{background: "#0275d8", color: "white"}}/>
+                                    :
+                                    <input type="button" className="profile-edit-btn" name="btnAddMore" value="Unfollow" onClick = {addFollowed} style={{background: "red", color: "white"}}/>
+                                }
                             </div>
                             <div className = "col-sm">
-                                <input type="submit" className="profile-edit-btn" name="btnAddMore" value="Message" onClick = {addFollowed} style={{background: "#32cd32", color: "white"}}/>
+                                <a href="/myMessages"><input type="button" className="profile-edit-btn" name="btnAddMore" value="Message" style={{background: "#32cd32", color: "white"}}/> </a>
                             </div>
                        </div>
                        

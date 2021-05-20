@@ -8,6 +8,7 @@ export default function NavbarComponent(props) {
     const logOut = () => {
         localStorage.setItem("currUser", "null");
         localStorage.setItem("accessToken", "null");
+        localStorage.setItem("userRole", "USER");
         window.location.href = "/";
     }
     return (localStorage.getItem("accessToken") === undefined || !localStorage.getItem("accessToken").localeCompare("null")) ?
@@ -43,6 +44,7 @@ export default function NavbarComponent(props) {
                     <NavDropdown title={localStorage.getItem("currUser")} id="basic-nav-dropdown">
                             <NavDropdown.Item href={"/myProfile"} >Your Profile</NavDropdown.Item>
                             <NavDropdown.Item href={"/myMessages"} >Your Messages</NavDropdown.Item>
+                            {(!localStorage.getItem("userRole").localeCompare("ADMIN")) ? <NavDropdown.Item href={"/register"} >Create Admin Account</NavDropdown.Item> : null}
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logOut}>Log Out</NavDropdown.Item>
                         </NavDropdown>

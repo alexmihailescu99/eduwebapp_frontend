@@ -10,6 +10,7 @@ export default function OwnUserPage(props) {
     const [email, setEmail] = useState("")
     const [occupation, setOccupation] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [followers, setFollowers] = useState(0)
 
     useEffect(() => {
         if (localStorage.getItem("accessToken") === "null" || localStorage.getItem("accessToken") === undefined)
@@ -25,7 +26,7 @@ export default function OwnUserPage(props) {
                 setUsername(res.data.username)
                 setFirstName(res.data.firstName)
                 setLastName(res.data.lastName)
-                setRole(res.data.role)
+                setRole(res.data.role.replace("ROLE_", ''))
                 setEmail(res.data.email)
                 setOccupation(res.data.occupation)
                 setPhoneNumber(res.data.phoneNumber)
@@ -35,6 +36,20 @@ export default function OwnUserPage(props) {
               }
         }
         fetchData()
+    }, [])
+
+    
+    useEffect(() => {
+        const countFollowers = async () => {
+            let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            } : {}
+            let res = await axios.get(`${backEndUrl}/user/follower`, headerPayload)
+            setFollowers(res.data.length)
+        }
+        countFollowers()
     }, [])
 
     const onSubmit = async e => {
@@ -80,6 +95,8 @@ export default function OwnUserPage(props) {
                                     <h6>
                                         {occupation}
                                     </h6>
+                                    <p className="proile-rating">ROLE : <span>{role.toUpperCase()}</span></p>
+                                    <p className="proile-rating">Followers : <span>{followers}</span></p>
 
                             <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className="nav-item">

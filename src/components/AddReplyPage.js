@@ -79,6 +79,7 @@ export default function AddReplyPage(props) {
                 content: content
             }
             let res = await axios.post(`${backEndUrl}/post/replies/${mainPost.id}`, data, headerPayload)
+            window.location.href = `/posts/${mainPost.id}`
         } catch (err) {
             alert("There was something wrong! Please try again")
             window.location.reload()

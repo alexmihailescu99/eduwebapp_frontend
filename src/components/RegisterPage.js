@@ -15,10 +15,22 @@ export default function RegisterPage(props) {
     const [email, setEmail] = useState("")
     const [occupation, setOccupation] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-
+    const [role, setRole] = useState("ADMIN")
+    const [registerLink, setRegisterLink] = useState(`${backEndUrl}/user/admin`)
+    useEffect(() => {
+        if (localStorage.getItem("userRole").localeCompare("ADMIN") !== 0) {
+            setRole("USER")
+            setRegisterLink(`${backEndUrl}/user`)
+        }
+    }, [])
     const onSubmit = async () => {
         try {
-            let res = await axios.post(`${backEndUrl}/user`, {
+            let headerPayload = (localStorage.getItem("accessToken").localeCompare("null") !== 0 && localStorage.getItem("accessToken") !== undefined) !== 0 ? {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            } : {}
+            let data = {
                 username: username,
                 password: password,
                 firstName: firstName,
@@ -26,10 +38,11 @@ export default function RegisterPage(props) {
                 email: email,
                 occupation: occupation,
                 phoneNumber: phoneNumber
-            })
+            }
+            let res = (localStorage.getItem("userRole").localeCompare("ADMIN") !== 0) ? await axios.post(registerLink, data) : await axios.post(registerLink, data, headerPayload)
             window.location.href = "/login"
         } catch (err) {
-            alert("Error")
+            alert(err)
         }
     }
 
