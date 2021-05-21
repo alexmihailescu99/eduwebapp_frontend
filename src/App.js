@@ -39,6 +39,7 @@ export const AlertDismissible = () => {
 }
 
 function App() {
+
   useEffect(() => {
     const fetchData = async () => {
       let headerPayload = localStorage.getItem("accessToken") !== "null" ? {
@@ -59,6 +60,10 @@ function App() {
     }
     fetchData()
   }, [])
+
+  useEffect(() => {
+    document.title = "AM Edu Web App"
+ }, []);
     
     return (
         <Router>
